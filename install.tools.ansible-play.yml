@@ -22,6 +22,7 @@
       - cocoapods
       - ffmpeg
       - circleci
+      - stow
 
   tasks:
     - name: Verify Apple Silicon architecture
