@@ -1,4 +1,3 @@
----
 - name: Install Homebrew applications on macOS
   hosts: localhost
   connection: local

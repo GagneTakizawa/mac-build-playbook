@@ -3,6 +3,8 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  collections:
+    - community.general.homebrew
   
   vars:
     # Apps that work better via Mac App Store
@@ -23,12 +25,21 @@
       - id: 1024640650
         name: "CotEditor"
       - id: 1147396723
-        name: "WhatsApp"  
-        
+        name: "WhatsApp"        
       - id: 1444383602
         name: "GoodNotes 6"
       - id: 1287239339
-        name: "ColorSlurp"  
+        name: "ColorSlurp"
+      - id: 1289583905
+        name: "Pixelmator Pro"
+      - id: 409203825
+        name: "Numbers"   
+      - id: 1295203466
+        name: "Microsoft Remote Desktop"  
+      - id: 1298486723
+        name: "FileZilla Pro"
+      - id: 411643860
+        name: "DaisyDisk"        
         
   
   tasks:
@@ -76,22 +87,6 @@
       debug:
         msg: "Currently installed App Store apps: {{ installed_mas_apps.stdout_lines }}"
       when: mas_account_check.rc == 0
-      
-    - name: Search for optional apps (to get App Store IDs)
-      shell: mas search "{{ item }}"
-      loop: "{{ apps_to_search }}"
-      register: app_search_results
-      failed_when: false
-      changed_when: false
-      when: mas_account_check.rc == 0
-      
-    - name: Display search results for reference
-      debug:
-        msg: "Search results for {{ item.item }}: {{ item.stdout_lines[0] if item.stdout_lines else 'Not found' }}"
-      loop: "{{ app_search_results.results }}"
-      when: 
-        - mas_account_check.rc == 0
-        - app_search_results is defined
         
     - name: Install applications via Mac App Store
       shell: mas install {{ item.id }}
@@ -124,28 +119,7 @@
     - name: Manual sign-in instructions
       debug:
         msg: |
-          📋 TO USE THIS PLAYBOOK:
-          
-          1. Sign into Mac App Store:
-             - System Preferences → Apple ID → Sign In
-             - Or open App Store app and sign in
-             
-          2. Verify sign-in:
-             mas account
-             
-          3. Re-run this playbook:
-             ansible-playbook mas-apps.yml
-             
-          4. Manual installation alternative:
-             {% for app in mas_applications %}
-             mas install {{ app.id }}  # {{ app.name }}
-             {% endfor %}
-             
-          5. Useful mas commands:
-             mas list          # Show installed apps
-             mas search "app"  # Find App Store IDs  
-             mas upgrade       # Update all apps
-             mas uninstall ID  # Remove app
+          📋 TO USE THIS PLAYBOOK Sign in to app store        
       when: mas_account_check.rc != 0
       
     - name: Create reference file with App Store IDs
