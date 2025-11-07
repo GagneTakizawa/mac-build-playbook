@@ -1,0 +1,79 @@
+---
+- name: Install Xcode and Development Tools on macOS
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  
+  vars:
+    install_full_xcode: false  # Set to true if you want full Xcode
+    
+  tasks:
+    - name: Verify Apple Silicon architecture
+      fail:
+        msg: "This playbook only supports Apple Silicon Macs (arm64)"
+      when: ansible_architecture != "arm64"
+    
+    - name: Check if Homebrew is installed
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: homebrew_check
+      
+    - name: Install Homebrew
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      when: not homebrew_check.stat.exists
+      
+    - name: Install Xcode Command Line Tools
+      shell: xcode-select --install
+      register: xcode_tools_result
+      failed_when: false
+      changed_when: "'already installed' not in xcode_tools_result.stderr"
+      
+    - name: Check Command Line Tools installation
+      shell: xcode-select -p
+      register: xcode_path
+      failed_when: false
+      
+    - name: Display Command Line Tools status
+      debug:
+        msg: "Xcode Command Line Tools installed at: {{ xcode_path.stdout }}"
+      when: xcode_path.rc == 0
+      
+    - name: Install mas (Mac App Store CLI) for full Xcode
+      community.general.homebrew:
+        name: mas
+        state: present
+      when: install_full_xcode | bool
+      
+    - name: Check if signed into App Store
+      shell: mas account
+      register: mas_account
+      failed_when: false
+      changed_when: false
+      when: install_full_xcode | bool
+      
+    - name: Install full Xcode from App Store
+      shell: mas install 497799835
+      register: xcode_install
+      failed_when: false
+      when: 
+        - install_full_xcode | bool
+        - mas_account.rc == 0
+        
+    - name: Display installation results
+      debug:
+        msg: |
+          Xcode Installation Summary:
+          - Command Line Tools: {{ 'Installed' if xcode_path.rc == 0 else 'Failed' }}
+          {% if install_full_xcode %}
+          - Full Xcode: {{ 'Attempted' if mas_account.rc == 0 else 'Skipped (not signed into App Store)' }}
+          {% endif %}
+          
+    - name: Post-installation notes
+      debug:
+        msg: |
+          IMPORTANT NOTES:
+          1. Command Line Tools provide: git, clang, make, etc.
+          2. For full Xcode IDE: Set install_full_xcode: true and sign into App Store
+          3. Full Xcode is ~15GB download
+          4. Alternative: Install Xcode manually from App Store
+          5. Accept Xcode license: sudo xcodebuild -license accept
