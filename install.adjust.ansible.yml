@@ -1,0 +1,161 @@
+---
+- name: Manage macOS Dock using dockutil
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  
+  vars:
+    # Set to true to remove ALL items from dock first
+    clear_dock_completely: false
+    
+    # Items to remove from dock (by name)
+    dock_items_to_remove:
+      - "Mail"
+      - "Maps" 
+      - "Photos"
+      - "FaceTime"
+      - "Calendar"
+      - "Contacts"
+      - "Reminders"
+      - "Notes"
+      - "TV"
+      - "Music"
+      - "Podcasts"
+      - "Numbers"
+      - "Pages"
+      - "Keynote"
+    
+    # Applications to add to dock
+    dock_apps_to_add:
+      - "/Applications/Mimestream.app"
+      - "/Applications/Google Chrome.app"
+      - "/Applications/Slack.app"
+      - "/Applications/Obsidian.app"
+      - "/Applications/Figma.app"
+      - "/Applications/Spotify.app"
+      - "/Applications/WhatsApp.app"
+      - "/Applications/Bitwarden.app"
+      - "/System/Applications/System Preferences.app"
+      - "/System/Applications/Activity Monitor.app"
+      - "/System/Applications/Terminal.app"
+    
+    # Folders to add to dock
+    dock_folders_to_add:
+      - path: "~/Downloads"
+        display: "folder"
+        view: "fan"
+      - path: "~/Documents" 
+        display: "folder"
+        view: "list"
+      - path: "~/Applications"
+        display: "folder" 
+        view: "grid"
+    
+    # URLs to add to dock (optional)
+    dock_urls_to_add: []
+      # - url: "https://github.com"
+      #   label: "GitHub"
+  
+  tasks:
+    - name: Verify Apple Silicon architecture
+      fail:
+        msg: "This playbook only supports Apple Silicon Macs (arm64)"
+      when: ansible_architecture != "arm64"
+    
+    - name: Check if Homebrew is installed
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: homebrew_check
+      
+    - name: Install Homebrew
+      shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      when: not homebrew_check.stat.exists
+      
+    - name: Install dockutil
+      community.general.homebrew:
+        name: dockutil
+        state: present
+        
+    - name: Get current dock items
+      shell: dockutil --list
+      register: current_dock_items
+      changed_when: false
+      failed_when: false
+      
+    - name: Display current dock items
+      debug:
+        msg: "Current dock items: {{ current_dock_items.stdout_lines }}"
+        
+    - name: Clear entire dock if requested
+      shell: dockutil --remove all --no-restart
+      when: clear_dock_completely | bool
+      register: dock_cleared
+      
+    - name: Remove specified items from dock
+      shell: dockutil --remove "{{ item }}" --no-restart
+      loop: "{{ dock_items_to_remove }}"
+      register: dock_removals
+      failed_when: false
+      changed_when: "'was not found' not in dock_removals.stderr"
+      
+    - name: Add applications to dock
+      shell: dockutil --add "{{ item }}" --no-restart
+      loop: "{{ dock_apps_to_add }}"
+      register: app_additions
+      failed_when: false
+      changed_when: "'already exists' not in app_additions.stderr"
+      
+    - name: Check if applications exist before adding
+      stat:
+        path: "{{ item }}"
+      loop: "{{ dock_apps_to_add }}"
+      register: app_existence_check
+      
+    - name: Display missing applications
+      debug:
+        msg: "Warning: {{ item.item }} does not exist and was not added to dock"
+      loop: "{{ app_existence_check.results }}"
+      when: not item.stat.exists
+      
+    - name: Add folders to dock
+      shell: dockutil --add "{{ item.path }}" --view "{{ item.view }}" --display "{{ item.display }}" --no-restart
+      loop: "{{ dock_folders_to_add }}"
+      register: folder_additions  
+      failed_when: false
+      changed_when: "'already exists' not in folder_additions.stderr"
+      
+    - name: Add URLs to dock
+      shell: dockutil --add "{{ item.url }}" --label "{{ item.label }}" --no-restart
+      loop: "{{ dock_urls_to_add }}"
+      register: url_additions
+      failed_when: false
+      changed_when: "'already exists' not in url_additions.stderr"
+      when: dock_urls_to_add | length > 0
+      
+    - name: Restart dock to apply changes
+      shell: killall Dock
+      
+    - name: Wait for dock to restart
+      pause:
+        seconds: 3
+        
+    - name: Get updated dock items
+      shell: dockutil --list
+      register: updated_dock_items
+      changed_when: false
+      
+    - name: Display updated dock
+      debug:
+        msg: "Updated dock items: {{ updated_dock_items.stdout_lines }}"
+        
+    - name: Display summary
+      debug:
+        msg: |
+          Dock Management Complete!
+          - Items removed: {{ dock_items_to_remove | length }}
+          - Apps added: {{ dock_apps_to_add | length }}  
+          - Folders added: {{ dock_folders_to_add | length }}
+          {% if dock_urls_to_add | length > 0 %}
+          - URLs added: {{ dock_urls_to_add | length }}
+          {% endif %}
+          The dock has been restarted and changes should be visible.
