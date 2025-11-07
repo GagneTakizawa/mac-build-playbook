@@ -10,7 +10,19 @@
       - btop
       - awscli
       - imagemagick
-  
+      - wget
+      - pipx
+      - nmap
+      - node@22
+      - sbt
+      - jq
+      - handbrake
+      - gradle
+      - gh
+      - cocoapods
+      - ffmpeg
+      - circleci
+
   tasks:
     - name: Verify Apple Silicon architecture
       fail:
