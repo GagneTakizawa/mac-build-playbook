@@ -16,17 +16,14 @@
       - jetbrains-toolbox
       - elgato-stream-deck
       - stats
-      - bitwarden
       - chatgpt
       - claude
       - slack
       - beyond-compare
       - adobe-creative-cloud
       - audio-hijack
-      - nordvpn
-      - goodnotes
-      - colorslurp
-      - logi-options-plus
+      - visual-studio-code
+      - cursor
   
   tasks:
     - name: Verify Apple Silicon architecture

@@ -1,4 +1,6 @@
 ---
-- import_playbook: install.tools.ansible.yml
-- import_playbook: install.gui.ansible.yml
-- import_playbook: install.xcode.ansible.yml
+- import_playbook: install.tools.ansible-play.yml
+- import_playbook: install.gui.ansible-play.yml
+- import_playbook: install.mas.ansible-play.yml
+- import_playbook: install.xcode.ansible-play.yml
+- import_playbook: install.adjust.ansible-play.yml

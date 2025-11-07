@@ -13,6 +13,7 @@
       - "Mail"
       - "Maps" 
       - "Photos"
+      - "Freeform"
       - "FaceTime"
       - "Calendar"
       - "Contacts"
@@ -35,21 +36,12 @@
       - "/Applications/Spotify.app"
       - "/Applications/WhatsApp.app"
       - "/Applications/Bitwarden.app"
-      - "/System/Applications/System Preferences.app"
-      - "/System/Applications/Activity Monitor.app"
-      - "/System/Applications/Terminal.app"
     
     # Folders to add to dock
     dock_folders_to_add:
       - path: "~/Downloads"
         display: "folder"
         view: "fan"
-      - path: "~/Documents" 
-        display: "folder"
-        view: "list"
-      - path: "~/Applications"
-        display: "folder" 
-        view: "grid"
     
     # URLs to add to dock (optional)
     dock_urls_to_add: []
