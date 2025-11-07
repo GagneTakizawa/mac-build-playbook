@@ -13,10 +13,6 @@
       - id: 905953485
         name: "NordVPN"
         
-      # Security & Privacy Apps
-      - id: 1352778147
-        name: "Bitwarden"
-        
       # Productivity Apps
       - id: 1529448980
         name: "Reeder."

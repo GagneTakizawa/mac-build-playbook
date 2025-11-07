@@ -25,6 +25,7 @@
       - visual-studio-code
       - cursor
       - logi-options-plus
+      - bitwarden
 
   tasks:
     - name: Verify Apple Silicon architecture
