@@ -23,6 +23,7 @@
       - ffmpeg
       - circleci
       - stow
+      - dart
 
   tasks:
     - name: Verify Apple Silicon architecture
@@ -43,6 +44,9 @@
       community.general.homebrew:
         update_homebrew: yes
         
+    - name: Add dart
+      command: brew tap dart-lang/dart
+
     - name: Install Homebrew packages
       community.general.homebrew:
         name: "{{ item }}"
