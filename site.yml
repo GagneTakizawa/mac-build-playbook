@@ -1,3 +1,4 @@
 ---
-- import_playbook: install-homebrew-apps.yml
-- import_playbook: install-gui-apps.yml
+- import_playbook: install.tools.ansible.yml
+- import_playbook: install.gui.ansible.yml
+- import_playbook: install.xcode.ansible.yml

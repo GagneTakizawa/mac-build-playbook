@@ -19,7 +19,14 @@
       - bitwarden
       - chatgpt
       - claude
-      - 
+      - slack
+      - beyond-compare
+      - adobe-creative-cloud
+      - audio-hijack
+      - nordvpn
+      - goodnotes
+      - colorslurp
+      - logi-options-plus
   
   tasks:
     - name: Verify Apple Silicon architecture
