@@ -40,8 +40,11 @@
         name: "FileZilla Pro"
       - id: 411643860
         name: "DaisyDisk"        
-        
-  
+      - id: 472226235
+        name: "LanScan"
+      - id: 1363637349
+        name: "Unread"
+
   tasks:
     - name: Verify Apple Silicon architecture
       fail:

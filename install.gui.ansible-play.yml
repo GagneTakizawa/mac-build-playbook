@@ -24,7 +24,8 @@
       - audio-hijack
       - visual-studio-code
       - cursor
-  
+      - logi-options
+
   tasks:
     - name: Verify Apple Silicon architecture
       fail:
