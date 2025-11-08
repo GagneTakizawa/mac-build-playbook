@@ -20,12 +20,13 @@
       - claude
       - slack
       - beyond-compare
-      - adobe-creative-cloud
       - audio-hijack
       - visual-studio-code
       - cursor
       - logi-options-plus
       - bitwarden
+      - zoom
+      - affinity
 
   tasks:
     - name: Verify Apple Silicon architecture

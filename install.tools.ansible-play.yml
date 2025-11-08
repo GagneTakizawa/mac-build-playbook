@@ -24,6 +24,7 @@
       - circleci
       - stow
       - dart
+      - fvm
 
   tasks:
     - name: Verify Apple Silicon architecture
@@ -46,6 +47,7 @@
         
     - name: Add dart
       command: brew tap dart-lang/dart
+      command: brew tap leoafarias/fvm
 
     - name: Install Homebrew packages
       community.general.homebrew:
