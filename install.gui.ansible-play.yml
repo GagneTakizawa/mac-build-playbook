@@ -19,14 +19,24 @@
       - chatgpt
       - claude
       - slack
-      - beyond-compare
+      - beyond-compare # File compare
       - audio-hijack
       - visual-studio-code
       - cursor
       - logi-options-plus
       - bitwarden
       - zoom
-      - affinity
+      - affinity # Graphics
+      - microsoft-teams
+      - hex-fiend # Hex
+      - daisydisk
+      - insomnia
+      - poedit # Localization
+      - xmind
+      - windows-app # Windows remote access
+      - shottr
+      - calibre
+
 
   tasks:
     - name: Verify Apple Silicon architecture

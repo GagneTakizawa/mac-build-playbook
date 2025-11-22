@@ -18,28 +18,23 @@
         name: "Reeder."
         
       # Creative & Design Apps  
-      - id: 1024640650
-        name: "CotEditor"
-      - id: 1147396723
-        name: "WhatsApp"        
-      - id: 1444383602
-        name: "GoodNotes 6"
       - id: 1287239339
         name: "ColorSlurp"
       - id: 1289583905
         name: "Pixelmator Pro"
       - id: 409203825
         name: "Numbers"   
-      - id: 1295203466
-        name: "Microsoft Remote Desktop"  
       - id: 1298486723
-        name: "FileZilla Pro"
-      - id: 411643860
-        name: "DaisyDisk"        
+        name: "FileZilla Pro"     
       - id: 472226235
         name: "LanScan"
       - id: 1363637349
         name: "Unread"
+      - id: 1444383602
+        name: "Goodnotes: AI ノート、ドキュメント、PDF"  
+      - id: 1494992020
+        name: "Supernote Partner App"
+      
 
   tasks:
     - name: Verify Apple Silicon architecture

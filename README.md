@@ -10,3 +10,15 @@ pip3 install --user ansible
 # Other stuff to install
 
 - Use safari to install Calendar and Word Time Buddy
+- Anki?
+- Audacity
+- Github desktop
+- Jabra direct?
+- Handbrake
+- Forklift? (file manager)
+- Plain Text Editor
+- Virtual Desktop
+- VeraCrypt
+- Yubikey
+- Android File Transfer
+- Aegisub (subtitle editor)
