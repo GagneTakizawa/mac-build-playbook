@@ -1,5 +1,6 @@
 # mac-dev-playbook
 
+git clone https://github.com/GagneTakizawa/mac-build-playbook
 
 xcode-select --install
 export PATH=$PATH:$HOME/Library/Python/3.8/bin:/opt/homebrew/bin

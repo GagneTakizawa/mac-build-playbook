@@ -23,8 +23,8 @@
       - ffmpeg
       - circleci
       - stow
-      - dart
       - fvm
+      # dart
 
   tasks:
     - name: Verify Apple Silicon architecture
