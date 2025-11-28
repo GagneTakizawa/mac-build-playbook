@@ -11,35 +11,20 @@
       - figma
       - spotify
       - obsidian
-      - whatsapp
       - dropbox
       - jetbrains-toolbox
-      - elgato-stream-deck
-      - stats
       - chatgpt
       - claude
       - slack
-      - beyond-compare # File compare
-      - audio-hijack
       - visual-studio-code
-      - cursor
-      - logi-options-plus
       - bitwarden
       - zoom
       - affinity # Graphics
       - microsoft-teams
-      - hex-fiend # Hex
-      - daisydisk
       - insomnia
       - poedit # Localization
       - xmind
-      - windows-app # Windows remote access
-      - shottr
-      - calibre
-      - loom
-      - rover # GraphQL CLI
-
-  # coteditor, 
+      - whatsapp
 
   tasks:
     - name: Verify Apple Silicon architecture
