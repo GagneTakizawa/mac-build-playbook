@@ -51,12 +51,6 @@
         state: present
       loop: "{{ homebrew_packages }}"
       
-    - name: Verify installed packages
-      command: brew list {{ item }}
-      loop: "{{ homebrew_packages }}"
-      register: package_verification
-      changed_when: false
-      
     - name: Display installation results
       debug:
         msg: "Successfully installed: {{ homebrew_packages | join(', ') }}"
