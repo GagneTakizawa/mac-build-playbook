@@ -51,13 +51,6 @@
         state: present
       loop: "{{ gui_applications }}"
       
-    - name: Verify installed applications
-      command: brew list --cask {{ item }}
-      loop: "{{ gui_applications }}"
-      register: app_verification
-      changed_when: false
-      failed_when: false
-      
     - name: Display installation results
       debug:
         msg: "Successfully installed GUI applications: {{ gui_applications | join(', ') }}"
