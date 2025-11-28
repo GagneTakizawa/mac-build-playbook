@@ -23,7 +23,7 @@
       - ffmpeg
       - circleci
       - stow
-      - fvm
+      #- fvm
       # dart
 
   tasks:
