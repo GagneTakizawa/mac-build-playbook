@@ -44,10 +44,6 @@
     - name: Update Homebrew
       community.general.homebrew:
         update_homebrew: yes
-        
-    - name: Add dart
-      command: brew tap dart-lang/dart
-      command: brew tap leoafarias/fvm
 
     - name: Install Homebrew packages
       community.general.homebrew:

@@ -10,6 +10,11 @@ defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "true" &&
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false && killall Finder
 chflags nohidden ~/Library
 
+brew tap dart-lang/dart
+brew tap leoafarias/fvm
+brew install dart
+brew install fvm
+
 fvm install stable
 npm install -g @2fd/graphdoc
 
